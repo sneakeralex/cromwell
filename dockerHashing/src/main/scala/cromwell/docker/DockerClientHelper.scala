@@ -20,7 +20,7 @@ trait DockerClientHelper extends RobustClientHelper { this: Actor with ActorLogg
   }
 
   def sendDockerCommand(dockerHashRequest: DockerInfoRequest, timeout: FiniteDuration = RobustClientHelper.DefaultRequestLostTimeout) = {
-    robustSend(dockerHashRequest, dockerHashingActor, timeout)
+    robustSend(dockerHashRequest, dockerHashingActor, timeout) // 5 minute timeout, seems awfully high
   }
 
   def dockerReceive = robustReceive orElse dockerResponseReceive

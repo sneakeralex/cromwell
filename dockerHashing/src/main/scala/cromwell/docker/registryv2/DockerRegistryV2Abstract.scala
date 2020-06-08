@@ -162,7 +162,7 @@ abstract class DockerRegistryV2Abstract(override val config: DockerRegistryConfi
   protected def buildTokenRequestUri(dockerImageID: DockerImageIdentifier): Uri = {
     val service = serviceName map { name => s"service=$name&" } getOrElse ""
     Uri.apply(
-      scheme = Option(Scheme.https),
+      scheme = Option(Scheme.http), // UNDO
       authority = Option(Authority(host = Uri.RegName(authorizationServerHostName(dockerImageID)))),
       path = "/token",
       query = Query.fromString(s"${service}scope=repository:${dockerImageID.nameWithDefaultRepository}:pull")
@@ -194,7 +194,7 @@ abstract class DockerRegistryV2Abstract(override val config: DockerRegistryConfi
     */
   private def buildManifestUri(dockerImageID: DockerImageIdentifier): Uri = {
     Uri.apply(
-      scheme = Option(Scheme.https),
+      scheme = Option(Scheme.http), // UNDO
       authority = Option(Authority(host = Uri.RegName(registryHostName(dockerImageID)))),
       path = s"/v2/${dockerImageID.nameWithDefaultRepository}/manifests/${dockerImageID.reference}"
     )
